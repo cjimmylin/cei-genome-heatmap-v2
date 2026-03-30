@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Governance Genome Explorer (Literature-Grounded: Vault + External Scholarship)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ==================== Header ==================== -->
+<header class="header">
+    <div class="header-title">
+        <h1><span>Governance Genome</span> Explorer (Literature-Grounded: Vault + External Scholarship)</h1>
+        <div class="header-subtitle">Fingerprint 2.0 "The Prism" (Response to Peer Review, v2) &mdash; 2,021 AI governance statements &times; 226 dimensions &times; 5 policy families + 1 residual</div>
+    </div>
+    <div class="header-right">
+        <button class="theme-toggle" id="theme-toggle" title="Toggle theme">&#9790;</button>
+    </div>
+</header>
+
+<!-- ==================== Tab Navigation ==================== -->
+<nav class="tab-nav" role="tablist">
+    <button class="tab-btn active" data-tab="overview" role="tab">Overview</button>
+    <button class="tab-btn" data-tab="features" role="tab">Features</button>
+    <button class="tab-btn" data-tab="heatmap" role="tab">Heatmap</button>
+    <button class="tab-btn" data-tab="policy-map" role="tab">Policy Map</button>
+    <button class="tab-btn" data-tab="families" role="tab">Families</button>
+    <button class="tab-btn" data-tab="temporal" role="tab">Temporal</button>
+    <button class="tab-btn" data-tab="sacred-secular" role="tab">Sacred-Secular</button>
+    <button class="tab-btn" data-tab="enforcement" role="tab">Enforcement</button>
+    <button class="tab-btn" data-tab="channels" role="tab">Channels</button>
+    <button class="tab-btn" data-tab="encoding-matched" role="tab">Encoding-Matched</button>
+    <button class="tab-btn" data-tab="anchors" role="tab">Anchors</button>
+    <button class="tab-btn" data-tab="innovation-rights" role="tab">Innovation-Rights</button>
+    <button class="tab-btn" data-tab="methods" role="tab">Methods</button>
+    <button class="tab-btn" data-tab="rfgini2b" role="tab">Validation</button>
+</nav>
+
+<!-- ==================== Tab Content ==================== -->
+<main class="tab-content">
+
+    <!-- ==================== KPI Row ==================== -->
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-value">2,021</div>
+            <div class="kpi-label">Statements</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-value">226</div>
+            <div class="kpi-label">Genome Fields</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-value">347</div>
+            <div class="kpi-label">Features</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-value">6</div>
+            <div class="kpi-label">Policy Families</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-value">0.155</div>
+            <div class="kpi-label">Silhouette</div>
+        </div>
+        <div class="kpi-card">
+            <div class="kpi-value">45</div>
+            <div class="kpi-label">Anchors</div>
+        </div>
+    </div>
+
+    <!-- ==================== TAB 1: Overview ==================== -->
+    <section class="tab-pane active" id="pane-overview" role="tabpanel">
+    <div id="overview-main">
+
+        <div class="findings-grid" id="findings-grid">
+            <!-- JS will populate 10 finding cards here -->
+        </div>
+
+        <div class="chart-grid-2">
+            <div class="chart-card">
+                <h3>Policy Family Distribution</h3>
+                <div class="chart-container" id="chart-family-donut"></div>
+            </div>
+            <div class="chart-card">
+                <h3>Top Organization Types</h3>
+                <div class="chart-container" id="chart-org-bar"></div>
+            </div>
+        </div>
+
+        <div class="chart-grid-2">
+            <div class="chart-card">
+                <h3>Regional Distribution</h3>
+                <div class="chart-container" id="chart-region-bar"></div>
+            </div>
+            <div class="chart-card">
+                <h3>Statement Volume Over Time</h3>
+                <div class="chart-container" id="chart-volume-line"></div>
+            </div>
+        </div>
+
+        <div class="narrative-box" id="overview-narrative">
+            The <strong>Governance Genome</strong> encodes <strong>2,021</strong> AI governance statements as
+            226-dimensional vectors across <strong>3 channels</strong> (Content, Form, Anchored Embeddings),
+            revealing <strong>5 policy families and one residual category</strong> in the global AI governance landscape.
+            This "Prism" architecture achieves <strong>silhouette 0.155</strong>, providing a structured
+            lens into how diverse institutions frame AI principles and regulation.
+        </div>
+    </div><!-- end overview-main -->
+
+    <div id="finding-detail-pane" style="display:none">
+        <button class="back-btn" onclick="hideFindingDetail()">&larr; Back to Overview</button>
+        <div id="finding-detail-content"></div>
+    </div>
+    </section>
+
+<!-- ==================== TAB 2: Features ==================== -->
+<section class="tab-pane" id="pane-features" role="tabpanel">
+    <div class="sub-nav">
+        <button class="sub-btn active" data-sub="features-catalog">Catalog</button>
+        <button class="sub-btn" data-sub="features-structure">Structure</button>
+        <button class="sub-btn" data-sub="features-distributions">Distributions</button>
+        <button class="sub-btn" data-sub="features-importance">Importance &amp; Relationships</button>
+    </div>
+
+    <!-- Tab-level narrative -->
+    <div class="narrative-box" style="margin-bottom:1.5rem;">
+        <h2><em>The 226-Dimension Governance Genome</em></h2>
+        <p>Each of the 2,021 AI governance statements in the Tapestry database is encoded as a <strong>226-dimensional vector</strong> — its "governance genome." These dimensions span three channels: <strong>C1 Content</strong> (125 dimensions capturing substantive normative positions — transparency, accountability, dignity, tradition-specific concepts like <em>ubuntu</em>, <em>khalifah</em>, and <em>imago Dei</em>), <strong>C2 Form</strong> (27 base dimensions capturing institutional structure — who wrote it, how binding it is, for whom), and <strong>C3 Anchored</strong> (45 dimensions measuring semantic similarity to reference anchor statements). After one-hot and multi-hot expansion of categorical fields, the feature space grows to <strong>347 total features</strong>.</p>
+        <p><strong>Method:</strong> Features were derived via computationally-assisted concept discovery from 12 agents × 3 waves × 120 document extracts, consolidated by an expert council into a structured rubric with 14 pillars, scored by calibrated LLM coders (Krippendorff's α = 0.942), and validated via Random Forest classification (88.4% accuracy, 66pp above majority baseline).</p>
+    </div>
+
+    <!-- ====== SUB-TAB A: Catalog ====== -->
+    <div class="sub-pane active" id="sub-features-catalog">
+        <div id="features-catalog-kpi" class="kpi-grid" style="margin-bottom:1.5rem;"></div>
+
+        <div class="narrative-box" style="margin-bottom:1rem;">
+            <h3>Feature Catalog</h3>
+            <p>Browse all 347 features in the governance genome. Use the filters and search box to narrow results. Click any row to expand its detail card showing the full description, value histogram, and per-cluster means.</p>
+        </div>
+
+        <!-- Filter controls -->
+        <div style="display:flex;gap:0.75rem;margin-bottom:1rem;flex-wrap:wrap;align-items:center;">
+            <input type="text" id="feature-search" class="feature-search-input" placeholder="Search features..." />
+            <select id="feature-filter-channel" class="feature-search-input" style="width:auto;">
+                <option value="">All Channels</option>
+                <option value="C1">C1 Content</option>
+                <option value="C2">C2 Form</option>
+                <option value="C3">C3 Anchored</option>
+            </select>
+            <select id="feature-filter-type" class="feature-search-input" style="width:auto;">
+                <option value="">All Types</option>
+                <option value="score">Score</option>
+                <option value="one_hot">One-Hot</option>
+                <option value="multi_hot">Multi-Hot</option>
+            </select>
+            <select id="feature-filter-pillar" class="feature-search-input" style="width:auto;">
+                <option value="">All Pillars</option>
+            </select>
+            <span id="feature-count-label" style="color:var(--text-muted);font-size:0.85rem;"></span>
+        </div>
+
+        <div id="features-catalog-table-container" style="max-height:700px;overflow-y:auto;"></div>
+    </div>
+
+    <!-- ====== SUB-TAB B: Structure ====== -->
+    <div class="sub-pane" id="sub-features-structure">
+        <div class="narrative-box" style="margin-bottom:1.5rem;">
+            <h3><em>Feature Architecture</em></h3>
+            <p>The 226 genome dimensions are not a flat list — they form a structured hierarchy. Channel 1 (Content) organizes 125 dimensions into <strong>14 pillars</strong> (e.g., Human Dignity, Transparency, Safety), each containing concepts and tradition-specific specifics. Channel 2 (Form) encodes 9 categorical enums (expanded to 72 one-hot columns), 8 multi-label tag-lists (37 multi-hot columns), and 14 continuous scores. Channel 3 (Anchored) provides 45 semantic similarity dimensions.</p>
+        </div>
+
+        <div class="chart-card">
+            <h3>Channel &amp; Pillar Sunburst</h3>
+            <p class="chart-desc">Inner ring: 3 channels sized by feature count. Middle ring: C1 pillars, C2 type groups, C3 as a single block. Outer ring: individual features (visible on hover). Color by channel: <span style="color:#6366f1;">C1 Content</span>, <span style="color:#38bdf8;">C2 Form</span>, <span style="color:#f59e0b;">C3 Anchored</span>.</p>
+            <div class="chart-container chart-xl" id="chart-features-sunburst"></div>
+        </div>
+
+        <div class="chart-card">
+            <h3>C1 Rubric Taxonomy</h3>
+            <p class="chart-desc">The Content channel's 14 pillars, their concepts (T2), and tradition-specific specifics (T3). Node size reflects activation rate (nonzero%). Brighter nodes appear in more statements; dimmer nodes are specialized (e.g., tradition-specific concepts).</p>
+            <div class="chart-container chart-xl" id="chart-rubric-tree"></div>
+        </div>
+
+        <div class="chart-grid-2">
+            <div class="chart-card">
+                <h3>Feature Types by Channel</h3>
+                <p class="chart-desc">Each channel's composition by data type. C1 is entirely continuous scores. C2 mixes scores, one-hot encodings, and multi-hot tag expansions. C3 is all continuous.</p>
+                <div class="chart-container" id="chart-type-stacked"></div>
+            </div>
+            <div class="chart-card">
+                <h3>Pillar Size Treemap</h3>
+                <p class="chart-desc">The 14 C1 pillars sized by number of features. Color intensity reflects mean variance within the pillar — brighter pillars have more variable features.</p>
+                <div class="chart-container" id="chart-pillar-treemap"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ====== SUB-TAB C: Distributions ====== -->
+    <div class="sub-pane" id="sub-features-distributions">
+        <div id="features-dist-kpi" class="kpi-grid" style="margin-bottom:1.5rem;"></div>
+
+        <div class="narrative-box" style="margin-bottom:1.5rem;">
+            <h3><em>How Features Activate Across Statements</em></h3>
+            <p>Most C1 Content features are <strong>highly sparse</strong> — tradition-specific concepts like <em>ubuntu</em>, <em>khalifah</em>, and <em>imago Dei</em> are deeply meaningful where they appear but absent from the vast majority of secular documents. C2 Form features are denser — most statements have a binding nature, an authority type, and a geographic scope. C3 Anchored features are nearly universal (every statement has some similarity to every anchor).</p>
+        </div>
+
+        <div class="chart-card">
+            <h3>Sparsity Spectrum</h3>
+            <p class="chart-desc">All features ranked by activation rate (% of statements with nonzero value). Left end: highly sparse features active in &lt;5% of statements. Right end: near-universal features active in &gt;90%. Color by channel.</p>
+            <div class="chart-container chart-xl" id="chart-sparsity-spectrum"></div>
+        </div>
+
+        <div class="chart-grid-2">
+            <div class="chart-card">
+                <h3>Variance by Channel</h3>
+                <p class="chart-desc">Distribution of standard deviations within each channel. C2 Form features show the highest variance (driven by binary one-hot columns). C1 and C3 cluster at lower variance. Wider boxes indicate more heterogeneous feature behavior.</p>
+                <div class="chart-container" id="chart-variance-boxplot"></div>
+            </div>
+            <div class="chart-card">
+                <h3>Variance vs. Sparsity</h3>
+                <p class="chart-desc">Each dot is one feature. X-axis: activation rate. Y-axis: standard deviation. Color by channel, size by permutation importance. The upper-middle zone contains the most informative features — variable enough to discriminate, common enough to be measurable.</p>
+                <div class="chart-container" id="chart-variance-sparsity"></div>
+            </div>
+        </div>
+
+        <div class="chart-card">
+            <h3>Channel Sparsity Profile</h3>
+            <p class="chart-desc">For each channel, how many features fall into sparse (&lt;5% nonzero), moderate (5–50%), and dense (&gt;50%) categories. Confirms that C1 is predominantly sparse, C2 mixed, and C3 dense.</p>
+            <div class="chart-container" id="chart-channel-sparsity"></div>
+        </div>
+    </div>
+
+    <!-- ====== SUB-TAB D: Importance & Relationships ====== -->
+    <div class="sub-pane" id="sub-features-importance">
+        <div id="features-imp-kpi" class="kpi-grid" style="margin-bottom:1.5rem;"></div>
+
+        <div class="narrative-box" style="margin-bottom:1.5rem;">
+            <h3><em>Which Features Drive the 6 Policy Families?</em></h3>
+            <p>Not all 347 features contribute equally to the clustering structure. <strong>C2 Form features contribute more than C1 Content, though approximately 70% of this gap is attributable to encoding asymmetry between categorical and continuous features</strong> (see Encoding-Matched tab). Institutional form and substantive content interact through a convergence-divergence dynamic. This section explores feature importance, inter-feature correlations, and the effective dimensionality of the genome space.</p>
+        </div>
+
+        <div class="chart-grid-2">
+            <div class="chart-card">
+                <h3>Permutation Importance (Top 30)</h3>
+                <p class="chart-desc">Features ranked by how much classification accuracy drops when their values are shuffled. Color by channel. C2 Form features appear more important, though approximately 70% of this gap reflects encoding asymmetry (see Encoding-Matched tab).</p>
+                <div class="chart-container chart-tall" id="chart-feat-perm-imp"></div>
+            </div>
+            <div class="chart-card">
+                <h3>Gini Importance (Top 30)</h3>
+                <p class="chart-desc">Features ranked by impurity reduction across all Random Forest decision splits. Features high on both perm and Gini lists are the most robust discriminators.</p>
+                <div class="chart-container chart-tall" id="chart-feat-gini-imp"></div>
+            </div>
+        </div>
+
+        <div class="chart-grid-2">
+            <div class="chart-card">
+                <h3>Importance by Channel</h3>
+                <p class="chart-desc">Inner ring: permutation importance share. Outer ring: Gini importance share. Both confirm C2 Form features account for ~65% of total importance.</p>
+                <div class="chart-container" id="chart-imp-channel-donut"></div>
+            </div>
+            <div class="chart-card">
+                <h3>Importance vs. Variance</h3>
+                <p class="chart-desc">X-axis: standard deviation (variance). Y-axis: permutation importance. Color by channel, size by activation rate. Reveals which high-variance features actually matter for clustering vs. which are noise.</p>
+                <div class="chart-container" id="chart-imp-variance-scatter"></div>
+            </div>
+        </div>
+
+        <div class="chart-card">
+            <h3>Feature Correlation Heatmap (Top 50)</h3>
+            <p class="chart-desc">Pairwise Pearson correlations among the 50 highest-variance features, sorted by hierarchical clustering so correlated features are adjacent. Blue = negative, red = positive. Blocks along the diagonal reveal natural feature groups.</p>
+            <div class="chart-container chart-xl" id="chart-feat-corr-heatmap"></div>
+        </div>
+
+        <div class="chart-grid-2">
+            <div class="chart-card">
+                <h3>PCA Scree Plot</h3>
+                <p class="chart-desc">Bars: individual explained variance per principal component. Line: cumulative variance. Dashed lines at 80%, 90%, 95%. Shows the effective dimensionality — how many components capture most of the genome's information.</p>
+                <div class="chart-container" id="chart-pca-scree"></div>
+            </div>
+            <div class="chart-card">
+                <h3>PC1 &amp; PC2 Top Loadings</h3>
+                <p class="chart-desc">The 10 strongest positive and 10 strongest negative loadings for the first two principal components. Reveals what latent axes the genome space is organized around.</p>
+                <div class="chart-container chart-tall" id="chart-pc-loadings"></div>
+            </div>
+        </div>
+
+        <div class="narrative-box" style="margin-bottom:1rem;">
+            <h3>Natural Feature Clusters</h3>
+            <p>Hierarchical clustering on the feature correlation matrix reveals ~10 natural groupings of features that tend to co-occur across statements. Each card below shows the cluster's size, dominant channel, top members (sorted by importance), and mean intra-cluster correlation.</p>
+        </div>
+        <div id="feature-cluster-cards" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem;margin-bottom:2rem;"></div>
+
+        <div class="narrative-box">
+            <p><strong>Bottom line:</strong> The governance genome's 347 features have substantial redundancy — <span id="pca-80-text">~91</span> PCA components explain 80% of variance. Features cluster into ~10 natural groups, confirming that the 226 dimensions encode a smaller number of latent governance axes. Institutional form and substantive content interact: convergence on principles makes form the primary axis of remaining differentiation.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ==================== TAB 3: Heatmap ==================== -->
+<section class="tab-pane" id="pane-heatmap" role="tabpanel">
+    <div class="sub-nav">
+        <button class="sub-btn active" data-sub="heatmap-overview">Overview</button>
+        <button class="sub-btn" data-sub="heatmap-explorer">Explorer</button>
+        <button class="sub-btn" data-sub="heatmap-patterns">Patterns</button>
+    </div>
+
+    <!-- Tab-level narrative -->
+    <div class="narrative-box" style="margin-bottom:1.5rem;">
+        <h2><em>The Governance Genome Matrix</em></h2>
+        <p>This <strong>satellite view</strong> shows the complete governance genome — every one of the <strong>347 features</strong> scored for every one of the <strong>2,021 statements</strong> in the Tapestry database. Each pixel represents a single score (0–100). The result is a ~700,000-cell heatmap that reveals the macro-structure of global AI governance: which features activate where, which clusters of documents share similar profiles, and where the sparse frontier of tradition-specific concepts lights up.</p>
+        <p><strong>Color scale:</strong> Black (0 = absent) → Navy → Teal → Yellow → White (100 = maximum). <strong>Interactions:</strong> Scroll to zoom, drag to pan, hover for details. Use the ordering controls to rearrange rows and columns.</p>
+    </div>
+
+    <!-- ====== SUB-TAB A: Overview ====== -->
+    <div class="sub-pane active" id="sub-heatmap-overview">
+        <div id="hm-overview-kpi" class="kpi-grid" style="margin-bottom:1rem;"></div>
+
+        <!-- Ordering controls -->
+        <div class="heatmap-controls">
+            <label>Row order:
+                <select id="hm-row-order">
+                    <option value="cluster" selected>By Cluster</option>
+                    <option value="year">By Year</option>
+                    <option value="org_type">By Org Type</option>
+                    <option value="region">By Region</option>
+                    <option value="seriation">Seriation</option>
+                    <option value="activation">By Activation</option>
+                </select>
+            </label>
+            <label>Column order:
+                <select id="hm-col-order">
+                    <option value="channel_pillar" selected>Channel + Pillar</option>
+                    <option value="importance">By Importance</option>
+                    <option value="variance">By Variance</option>
+                    <option value="seriation">Seriation</option>
+                </select>
+            </label>
+            <label style="display:flex;align-items:center;gap:4px;">
+                <input type="checkbox" id="hm-show-minimap" checked> Minimap
+            </label>
+            <label style="margin-left:auto;display:flex;align-items:center;gap:4px;">
+                <span style="color:#94a3b8;font-size:0.82rem;">Find feature:</span>
+                <input type="text" id="hm-feature-search" class="feature-search-input" placeholder="e.g. transparency, khalifah..." style="width:200px;" />
+            </label>
+            <span id="hm-feature-search-status" style="color:#64748b;font-size:0.75rem;"></span>
+        </div>
+
+        <!-- Ordering descriptions -->
+        <div style="font-size:0.78rem;color:#64748b;line-height:1.6;margin-bottom:0.75rem;padding:0 4px;">
+            <strong style="color:#94a3b8;">Row orderings:</strong>
+            <strong>By Cluster</strong> — grouped by 6 policy families, most active first within each;
+            <strong>By Year</strong> — chronological (1998→2026);
+            <strong>By Org Type</strong> — grouped by institution type (government, religious, professional, etc.);
+            <strong>By Region</strong> — grouped by geographic region;
+            <strong>Seriation</strong> — optimal leaf ordering that places similar statements adjacent (smoothest gradient);
+            <strong>By Activation</strong> — sorted by total feature activation, most active at top.
+            &nbsp;|&nbsp;
+            <strong style="color:#94a3b8;">Column orderings:</strong>
+            <strong>Channel + Pillar</strong> — grouped by C1→C2→C3→Crosswalk, then by rubric pillar within C1;
+            <strong>By Importance</strong> — most predictive features first (RF permutation importance);
+            <strong>By Variance</strong> — highest-variance features first;
+            <strong>Seriation</strong> — optimal leaf ordering for columns.
+        </div>
+
+        <!-- Annotation track legends -->
+        <div style="display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:0.5rem;padding:0 4px;">
+            <!-- Column tracks (horizontal, at top of heatmap) -->
+            <div class="hm-track-legend">
+                <div class="hm-track-legend-title">▬ Column Tracks (top of heatmap)</div>
+                <div class="hm-track-legend-row">
+                    <span class="hm-track-legend-label">Track 1 — Channel:</span>
+                    <span class="hm-swatch" style="background:#6366f1;"></span>C1 Content
+                    <span class="hm-swatch" style="background:#38bdf8;"></span>C2 Form
+                    <span class="hm-swatch" style="background:#f59e0b;"></span>C3 Anchored
+                    <span class="hm-swatch" style="background:#a855f7;"></span>Crosswalk
+                </div>
+                <div class="hm-track-legend-row">
+                    <span class="hm-track-legend-label">Track 2 — Pillar:</span>
+                    <span class="hm-swatch" style="background:#ef4444;"></span>P01
+                    <span class="hm-swatch" style="background:#f97316;"></span>P02
+                    <span class="hm-swatch" style="background:#f59e0b;"></span>P03
+                    <span class="hm-swatch" style="background:#eab308;"></span>P04
+                    <span class="hm-swatch" style="background:#84cc16;"></span>P05
+                    <span class="hm-swatch" style="background:#22c55e;"></span>P06
+                    <span class="hm-swatch" style="background:#14b8a6;"></span>P07
+                    <span class="hm-swatch" style="background:#06b6d4;"></span>P08
+                    <span class="hm-swatch" style="background:#3b82f6;"></span>P09
+                    <span class="hm-swatch" style="background:#6366f1;"></span>P10
+                    <span class="hm-swatch" style="background:#8b5cf6;"></span>P11
+                    <span class="hm-swatch" style="background:#a855f7;"></span>P12
+                    <span class="hm-swatch" style="background:#d946ef;"></span>P13
+                    <span class="hm-swatch" style="background:#ec4899;"></span>P14
+                    <span class="hm-swatch" style="background:#4b5563;"></span>non-C1
+                </div>
+                <div class="hm-track-legend-row">
+                    <span class="hm-track-legend-label">Track 3 — Importance:</span>
+                    <span style="color:#94a3b8;font-size:0.72rem;">Bar height ∝ RF permutation importance (white)</span>
+                </div>
+            </div>
+
+            <!-- Row tracks (vertical, left of heatmap) -->
+            <div class="hm-track-legend">
+                <div class="hm-track-legend-title">▮ Row Tracks (left of heatmap)</div>
+                <div class="hm-track-legend-row">
+                    <span class="hm-track-legend-label">Track 1 — Cluster:</span>
+                    <span class="hm-swatch" style="background:#0072B2;"></span>Innovation
+                    <span class="hm-swatch" style="background:#CCCCCC;"></span>Unclassified
+                    <span class="hm-swatch" style="background:#CC6633;"></span>Religious
+                    <span class="hm-swatch" style="background:#D55E00;"></span>Rights
+                    <span class="hm-swatch" style="background:#009E73;"></span>Professional
+                    <span class="hm-swatch" style="background:#E69F00;"></span>Regulatory
+                </div>
+                <div class="hm-track-legend-row">
+                    <span class="hm-track-legend-label">Track 2 — Org Type:</span>
+                    <span class="hm-swatch" style="background:#3b82f6;"></span>govt
+                    <span class="hm-swatch" style="background:#06b6d4;"></span>IGO
+                    <span class="hm-swatch" style="background:#CC6633;"></span>religious
+                    <span class="hm-swatch" style="background:#8b5cf6;"></span>academic
+                    <span class="hm-swatch" style="background:#22c55e;"></span>civil soc.
+                    <span class="hm-swatch" style="background:#f97316;"></span>industry
+                    <span class="hm-swatch" style="background:#009E73;"></span>professional
+                    <span class="hm-swatch" style="background:#E69F00;"></span>NEB
+                </div>
+                <div class="hm-track-legend-row">
+                    <span class="hm-track-legend-label">Track 3 — Region:</span>
+                    <span class="hm-swatch" style="background:#3b82f6;"></span>Europe
+                    <span class="hm-swatch" style="background:#22c55e;"></span>N. America
+                    <span class="hm-swatch" style="background:#f59e0b;"></span>Asia-Pacific
+                    <span class="hm-swatch" style="background:#a855f7;"></span>Global
+                    <span class="hm-swatch" style="background:#ef4444;"></span>Africa
+                    <span class="hm-swatch" style="background:#ec4899;"></span>LATAM
+                    <span class="hm-swatch" style="background:#f97316;"></span>Middle East
+                    <span class="hm-swatch" style="background:#06b6d4;"></span>Oceania
+                </div>
+                <div class="hm-track-legend-row">
+                    <span class="hm-track-legend-label">Track 4 — Year:</span>
+                    <span style="display:inline-block;width:60px;height:10px;border-radius:2px;vertical-align:middle;background:linear-gradient(to right, #1a1a1a, #c8c890);"></span>
+                    <span style="color:#64748b;font-size:0.72rem;">1998 → 2026</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Canvas heatmap viewport -->
+        <div class="heatmap-viewport" id="hm-viewport">
+            <canvas id="hm-row-tracks" width="60" height="600"></canvas>
+            <div class="heatmap-main-wrap" id="hm-main-wrap">
+                <canvas id="hm-col-tracks" width="800" height="40"></canvas>
+                <div id="hm-feature-bar" class="hm-feature-bar">Hover over the heatmap to see feature names</div>
+                <canvas id="hm-canvas" width="800" height="600"></canvas>
+            </div>
+            <canvas id="hm-minimap" width="140" height="90"></canvas>
+        </div>
+
+        <!-- Tooltip -->
+        <div id="hm-tooltip" class="hm-tooltip" style="display:none;"></div>
+
+        <!-- Statement Detail Panel -->
+        <div id="hm-stmt-panel" class="hm-stmt-panel" style="display:none;">
+            <div class="hm-stmt-panel-header">
+                <h3 id="hm-stmt-panel-title">Statement Detail</h3>
+                <button id="hm-stmt-panel-close" class="hm-stmt-panel-close">&times;</button>
+            </div>
+            <div id="hm-stmt-panel-body" class="hm-stmt-panel-body"></div>
+        </div>
+
+        <!-- Color legend -->
+        <div class="hm-legend">
+            <span class="hm-legend-label">0</span>
+            <div class="hm-legend-gradient"></div>
+            <span class="hm-legend-label">100</span>
+        </div>
+
+        <div class="narrative-box" style="margin-top:1rem;">
+            <p><strong>Reading the heatmap:</strong> Bright horizontal bands indicate statements that engage deeply with many governance dimensions. Dark horizontal bands are narrow, focused documents. Bright vertical columns are features that activate broadly across the corpus (e.g., accountability, transparency). Dark vertical columns are tradition-specific concepts (e.g., <em>khalifah</em>, <em>imago Dei</em>) that light up only for their tradition's documents.</p>
+        </div>
+    </div>
+
+    <!-- ====== SUB-TAB B: Explorer ====== -->
+    <div class="sub-pane" id="sub-heatmap-explorer">
+        <div class="narrative-box" style="margin-bottom:1rem;">
+            <h3><em>Drill-Down Explorer</em></h3>
+            <p>Select filters to view a readable subset of the matrix with labeled rows and columns. Maximum ~5,000 cells for interactive exploration. Click any cell to see statement details.</p>
+        </div>
+
+        <div style="display:flex;gap:0.75rem;margin-bottom:1rem;flex-wrap:wrap;align-items:center;">
+            <label>Cluster: <select id="hm-exp-cluster" class="feature-search-input" style="width:auto;"><option value="all">All</option></select></label>
+            <label>Org Type: <select id="hm-exp-orgtype" class="feature-search-input" style="width:auto;"><option value="all">All</option></select></label>
+            <label>Region: <select id="hm-exp-region" class="feature-search-input" style="width:auto;"><option value="all">All</option></select></label>
+            <label>Channel: <select id="hm-exp-channel" class="feature-search-input" style="width:auto;"><option value="all">All</option></select></label>
+            <label>Pillar: <select id="hm-exp-pillar" class="feature-search-input" style="width:auto;"><option value="all">All</option></select></label>
+            <button id="hm-exp-go" style="background:#6366f1;color:white;border:none;padding:0.4rem 1rem;border-radius:6px;cursor:pointer;">Load</button>
+            <span id="hm-exp-status" style="color:#94a3b8;font-size:0.85rem;"></span>
+        </div>
+
+        <div class="chart-card">
+            <h3 id="hm-exp-title">Select filters and click Load</h3>
+            <div class="chart-container" id="chart-hm-explorer" style="height:600px;"></div>
+        </div>
+
+        <div id="hm-exp-detail" class="chart-card" style="display:none;">
+            <h3>Statement Detail</h3>
+            <div id="hm-exp-detail-content" style="font-size:0.85rem;line-height:1.6;"></div>
+        </div>
+    </div>
+
+    <!-- ====== SUB-TAB C: Patterns ====== -->
+    <div class="sub-pane" id="sub-heatmap-patterns">
+        <div class="narrative-box" style="margin-bottom:1rem;">
+            <h3><em>Guided Pattern Analysis</em></h3>
+            <p>Pre-computed analyses highlighting key structural patterns visible in the genome matrix. Each pattern shows a focused subset of the heatmap with narrative explanation.</p>
+        </div>
+
+        <div class="pattern-nav">
+            <button class="pattern-btn active" data-pattern="hottest">Hottest Rows</button>
+            <button class="pattern-btn" data-pattern="coldest">Coldest Rows</button>
+            <button class="pattern-btn" data-pattern="cluster-sig">Cluster Signatures</button>
+            <button class="pattern-btn" data-pattern="traditions">Tradition Activation</button>
+        </div>
+
+        <div id="hm-pattern-content"></div>
+    </div>
+</section>
+
+    <!-- ==================== TAB 2: Policy Map ==================== -->
+    <section class="tab-pane" id="pane-policy-map" role="tabpanel">
+
+        <div class="narrative-box" style="margin-bottom:1rem;padding:1rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);">
+            <h3 style="margin:0 0 0.5rem 0;">UMAP Policy Landscape</h3>
+            <p style="margin:0 0 0.5rem 0;line-height:1.6;">Each dot represents one of 2,021 AI governance statements, projected from 226 genome dimensions down to 2D using UMAP (Uniform Manifold Approximation and Projection). Nearby dots are similar in their governance profile; distant dots differ substantially. Clusters, gaps, and gradients in the map reveal the topography of the global AI governance landscape.</p>
+            <p style="margin:0;line-height:1.6;font-size:0.9rem;opacity:0.85;"><strong>Caution:</strong> UMAP preserves <em>local</em> neighborhood structure (nearby points are genuinely similar) but does not preserve <em>global</em> distances (the distance between distant clusters is not meaningful). Cluster shapes and inter-cluster gaps should be interpreted qualitatively, not metrically.</p>
+        </div>
+
+        <div class="chart-grid-9-3">
+            <div class="chart-card">
+                <h3>UMAP Projection &mdash; 2,021 Statements</h3>
+                <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">The main projection. Use the &lsquo;Color By&rsquo; dropdown to explore different facets: <em>Policy Family</em> reveals the 6 clusters; <em>Organization Type</em> shows institutional composition; <em>Region</em> reveals geographic patterns; <em>Year Band</em> shows temporal layering; <em>Binding Nature</em> highlights the enforcement landscape; <em>Sacred-Secular</em> illuminates the tradition spectrum.</p>
+                <div class="chart-container chart-xl" id="chart-umap-main"></div>
+            </div>
+            <div class="chart-card umap-sidebar">
+                <h3>Color By</h3>
+                <select id="umap-color-by">
+                    <option value="cluster">Policy Family (Cluster)</option>
+                    <option value="org_type">Organization Type</option>
+                    <option value="region">Region</option>
+                    <option value="year_band">Year Band</option>
+                    <option value="binding_nature">Binding Nature</option>
+                    <option value="sacred_secular">Sacred-Secular</option>
+                </select>
+                <div class="umap-legend" id="umap-legend">
+                    <!-- JS will populate legend -->
+                </div>
+                <h3>Selection Breakdown</h3>
+                <div class="chart-container" id="chart-umap-pie" style="height: 300px;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== TAB 3: Families ==================== -->
+    <section class="tab-pane" id="pane-families" role="tabpanel">
+
+        <div class="sub-nav">
+            <button class="sub-btn active" data-sub="families-overview">Overview</button>
+            <button class="sub-btn" data-sub="families-deep">Deep Dives</button>
+            <button class="sub-btn" data-sub="families-compare">Compare</button>
+            <button class="sub-btn" data-sub="families-stability">Stability</button>
+        </div>
+
+        <!-- Sub-tab 3a: Overview -->
+        <div class="sub-pane active" id="sub-families-overview">
+            <div class="narrative-box" style="margin-bottom:1rem;padding:1rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);">
+                <h3 style="margin:0 0 0.5rem 0;">The 5 Policy Families + 1 Residual Category</h3>
+                <p style="margin:0;line-height:1.6;">K-means clustering on the 226-dimensional genome vectors reveals 5 policy families and one residual category &mdash; groups of statements that share similar governance DNA. Each family card below shows the family&rsquo;s size, name, and top distinguishing dimensions (features where the family mean most exceeds the corpus mean). These are not arbitrary groupings: a Random Forest classifier can predict family membership with 88.4% accuracy from the genome dimensions alone.</p>
+            </div>
+            <div id="family-cards">
+                <!-- JS will populate 6 family summary cards -->
+            </div>
+            <div class="chart-card">
+                <h3>Pillar Intensity Heatmap (Families &times; Dimensions)</h3>
+                <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">Rows are the 6 families; columns are the 14 governance pillars (Rights, Transparency, Safety, etc.). Cell color intensity shows the family&rsquo;s mean score on that pillar. This reveals each family&rsquo;s &lsquo;governance fingerprint&rsquo; &mdash; where it invests its normative attention. Dark rows indicate families with sparse profiles; bright rows indicate families that engage deeply with many pillars.</p>
+                <div class="chart-container" id="chart-pillar-heatmap" style="height: 400px;"></div>
+            </div>
+            <div class="chart-grid-2">
+                <div class="chart-card">
+                    <h3>Organization Type by Family</h3>
+                    <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">Stacked bars showing which institution types (government, religious, professional, etc.) populate each family. Governments split across Innovation Champions and Risk Regulators; religious organizations concentrate almost entirely in the Religious family. This confirms that institutional identity correlates with governance approach but does not determine it (ARI = 0.20).</p>
+                    <div class="chart-container" id="chart-cluster-org"></div>
+                </div>
+                <div class="chart-card">
+                    <h3>Region by Family</h3>
+                    <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">Geographic distribution within each family. Innovation Champions draw heavily from Asia-Pacific and Africa; Risk Regulators are Europe-dominated; Religious governance is globally distributed across all regions with organized religious institutions. Regional patterns reflect both policy priorities and institutional capacity.</p>
+                    <div class="chart-container" id="chart-cluster-region"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sub-tab 3b: Deep Dives -->
+        <div class="sub-pane" id="sub-families-deep">
+            <div class="narrative-box" style="margin-bottom:1rem;padding:1rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);">
+                <h3 style="margin:0 0 0.5rem 0;">Family Deep Dives</h3>
+                <p style="margin:0;line-height:1.6;">Select a policy family below to explore its governance profile in detail. The <strong>radar chart</strong> shows the family&rsquo;s mean scores on its top distinguishing dimensions. The <strong>top dimensions</strong> list ranks features by how much the family&rsquo;s mean exceeds (or falls below) the corpus-wide mean. <strong>Exemplar statements</strong> are the documents closest to the family centroid &mdash; the most &ldquo;typical&rdquo; members of each governance approach.</p>
+            </div>
+            <div class="family-btn-row">
+                <button class="family-btn active" data-family="0">Family 0</button>
+                <button class="family-btn" data-family="1">Family 1</button>
+                <button class="family-btn" data-family="2">Family 2</button>
+                <button class="family-btn" data-family="3">Family 3</button>
+                <button class="family-btn" data-family="4">Family 4</button>
+                <button class="family-btn" data-family="5">Family 5</button>
+            </div>
+            <div id="family-detail">
+                <!-- JS will populate: radar, top dims, exemplar statements -->
+            </div>
+        </div>
+
+        <!-- Sub-tab 3c: Compare -->
+        <div class="sub-pane" id="sub-families-compare">
+            <div class="narrative-box" style="margin-bottom:1rem;padding:1rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);">
+                <h3 style="margin:0 0 0.5rem 0;">Cluster Quality &amp; Selection</h3>
+                <p style="margin:0;line-height:1.6;">Choosing the number of clusters (k) requires balancing interpretability with statistical quality. The silhouette score measures how similar each statement is to its own cluster versus the nearest neighboring cluster (+1 = perfect fit, 0 = boundary, &minus;1 = misclassified). We selected k=6 based on interpretability, stability analysis, and expert validation &mdash; not solely on silhouette optimization.</p>
+            </div>
+            <div class="chart-card">
+                <h3>Silhouette Score Curve (k = 2&ndash;12)</h3>
+                <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">Mean silhouette score at each k value. Higher is better, but the curve typically decreases monotonically in high-dimensional data. The absence of a clear &lsquo;elbow&rsquo; is expected &mdash; governance documents form a continuous landscape with soft boundaries, not crisp natural clusters. The k=6 solution balances granularity with interpretability.</p>
+                <div class="chart-container" id="chart-sil-curve"></div>
+            </div>
+            <div class="chart-grid-2">
+                <div class="chart-card">
+                    <h3>Per-Cluster Silhouette</h3>
+                    <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">Mean silhouette score for each of the 6 families at the chosen k=6 solution. Higher bars indicate more cohesive families. The Religious family typically scores highest (its members are most distinctive). Lower-scoring families (e.g., Unclassified / Residual, with negative mean silhouette -0.051; treated as a residual category, not a substantive policy family) contain more heterogeneous documents.</p>
+                    <div class="chart-container" id="chart-cluster-sil-bar"></div>
+                </div>
+                <div class="chart-card">
+                    <h3>Cluster Size Distribution</h3>
+                    <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">Number of statements in each family. A balanced distribution suggests the clustering is not dominated by one mega-cluster. The current solution ranges from 125 (Religious) to 450 (Regulatory), reflecting genuine variation in governance activity across different institutional approaches.</p>
+                    <div class="chart-container" id="chart-cluster-sizes"></div>
+                </div>
+            </div>
+            <div class="narrative-box" style="margin-top:1rem;padding:1rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);">
+                <strong>Why silhouette 0.155?</strong> In high-dimensional data (226 dimensions), silhouette scores are systematically lower than in low-dimensional toy datasets. A silhouette of 0.155 is comparable to published results in computational social science and text clustering. The key validation is that a Random Forest achieves 88.4% classification accuracy (66pp above majority baseline) on these clusters &mdash; they are genuinely separable even if boundaries are soft.
+            </div>
+        </div>
+
+        <!-- Sub-tab 3d: Stability -->
+        <div class="sub-pane" id="sub-families-stability">
+            <div class="narrative-box" style="margin-bottom:1rem;padding:1rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);">
+                <h3 style="margin:0 0 0.5rem 0;">Cluster Stability Across k Values</h3>
+                <p style="margin:0;line-height:1.6;">A robust clustering solution should be stable under small perturbations. This sub-tab examines what happens when we vary k (the number of clusters) from 5 to 7. If the same families reappear across different k values, the structure is genuine. If families fragment or merge unpredictably, the solution is fragile.</p>
+            </div>
+            <div class="chart-card">
+                <h3>Cluster Stability (k=5 to k=7)</h3>
+                <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">Jaccard overlap matrix showing how clusters at k=5, k=6, and k=7 map onto each other. High overlap (bright cells) between k=5 and k=6 families means those families survive when splitting from 5 to 6 groups. The Religious family typically shows the highest stability (Jaccard &gt; 0.9) because it is the most structurally distinct.</p>
+                <div class="chart-container" id="chart-cluster-stability"></div>
+            </div>
+            <div class="chart-card">
+                <h3>Silhouette Distribution by Cluster</h3>
+                <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">Distribution of per-statement silhouette scores within each family. The median line shows typical cohesion; the spread shows heterogeneity. Families with tight distributions (small interquartile range) are internally coherent. Families with wide distributions or negative tails contain statements that are borderline members &mdash; they could plausibly belong to a neighboring family.</p>
+                <div class="chart-container chart-tall" id="chart-silhouette-fan"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== TAB 4: Temporal ==================== -->
+    <section class="tab-pane" id="pane-temporal" role="tabpanel">
+
+            <div class="narrative-box" style="margin-bottom:1rem;padding:1rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);">
+                <h3 style="margin:0 0 0.5rem 0;">Temporal Evolution of AI Governance</h3>
+                <p style="margin:0;line-height:1.6;">AI governance has undergone dramatic shifts since the first documents appeared in our corpus (1998). Three eras are visible: <strong>2010&ndash;2019</strong> (innovation-dominant, few binding documents), <strong>2020&ndash;2022</strong> (regulatory crossover, EU AI Act process begins), and <strong>2023&ndash;2026</strong> (rapid expansion across all families, religious emergence). The corpus grew from 6 statements per year (2014) to over 400 per year (2024), reflecting the global urgency of AI governance.</p>
+            </div>
+
+        <div class="chart-grid-2">
+            <div class="chart-card">
+                <h3>Family Composition Over Time (Area)</h3>
+                <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">Stacked area chart showing cumulative growth of each policy family over time. The vertical extent of each colored band shows that family&rsquo;s share of the cumulative total. The rapid widening after 2020 reflects the global governance explosion. The appearance of the Religious family band (brown) after 2017 is clearly visible.</p>
+                <div class="chart-container chart-tall" id="chart-temporal-area"></div>
+            </div>
+            <div class="chart-card">
+                <h3>Annual Counts by Family (Stacked Bar)</h3>
+                <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">Year-by-year statement counts, stacked by family. Peak years reveal governance surges: 2019 (post-OECD Principles), 2023 (EU AI Act adoption), 2024 (global implementation wave). The relative heights of family segments show which governance approaches dominate each year.</p>
+                <div class="chart-container chart-tall" id="chart-temporal-bar"></div>
+            </div>
+        </div>
+
+        <div class="chart-grid-2">
+            <div class="chart-card">
+                <h3>Genome Drift &mdash; Mean Dimension Shift by Year</h3>
+                <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">Measures how much the average governance statement has changed over time across all 226 genome dimensions. Rising drift indicates the governance conversation is evolving &mdash; new concepts are entering, old ones are being re-weighted. Flat periods indicate consolidation around established frameworks.</p>
+                <div class="chart-container" id="chart-temporal-line" style="height: 400px;"></div>
+            </div>
+            <div class="chart-card">
+                <h3>Era Comparison Radar</h3>
+                <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">Radar chart comparing the mean genome profile across three eras. Each axis represents a key governance dimension. Differences between era profiles reveal which concepts have grown (e.g., risk-based governance, environmental impact) and which have faded (e.g., purely aspirational framing).</p>
+                <div class="chart-container" id="chart-temporal-radar" style="height: 400px;"></div>
+            </div>
+        </div>
+
+            <div class="narrative-box" style="margin-top:1rem;padding:1rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);">
+                <strong>The regulatory turn is real:</strong> In 2017&ndash;2019, innovation-optimist documents outnumbered risk-regulatory ones 2:1. By 2020&ndash;2022, risk regulation had pulled ahead. By 2023&ndash;2026, the gap widened further. The crossover year was 2020, when the EU AI Act legislative process began. Meanwhile, religious governance went from zero (pre-2017) to 125 statements &mdash; the fastest-growing family in the corpus.
+            </div>
+    </section>
+
+    <!-- ==================== TAB 5: Sacred-Secular ==================== -->
+    <section class="tab-pane" id="pane-sacred-secular" role="tabpanel">
+
+        <div class="sub-nav">
+            <button class="sub-btn active" data-sub="sacred-spectrum">Spectrum</button>
+            <button class="sub-btn" data-sub="sacred-traditions">Traditions</button>
+            <button class="sub-btn" data-sub="sacred-tradition-corr">Tradition Correlations</button>
+        </div>
+
+        <!-- Sub-tab 5a: Spectrum -->
+        <div class="sub-pane active" id="sub-sacred-spectrum">
+            <div class="narrative-box" style="margin-bottom:1rem;padding:1rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);">
+                <h3 style="margin:0 0 0.5rem 0;">The Sacred-Secular Spectrum</h3>
+                <p style="margin:0;line-height:1.6;">Each statement receives a sacred-secular score (0&ndash;100) based on the presence and intensity of religious, theological, and tradition-specific governance concepts. A score of 0 means entirely secular (e.g., EU AI Act); a score of 100 means deeply rooted in a specific religious tradition (e.g., Islamic Fiqh Academy Resolution 258). This score is derived from the C1 content dimensions in pillars P10&ndash;P12 (Religious, Islamic, Indigenous governance concepts).</p>
+            </div>
+            <div class="chart-card">
+                <h3>Sacred-Secular Score Distribution</h3>
+                <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">Histogram showing how sacred-secular scores distribute across 2,021 statements. The distribution is heavily right-skewed: the vast majority of documents are fully secular (score 0), with a smaller tail of tradition-rooted documents. The 125 statements in the Religious/Tradition-Based family (Family 3) cluster at the high end.</p>
+                <div class="chart-container" id="chart-sacred-hist" style="height: 350px;"></div>
+            </div>
+            <div class="chart-card">
+                <h3>UMAP Colored by Sacred-Secular Score</h3>
+                <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">The same 2D UMAP projection as the Policy Map, but colored by sacred-secular score. Yellow/bright dots indicate tradition-rooted documents, which cluster tightly in a distinct region of the map &mdash; confirming that religious governance occupies a structurally separate position in the global landscape, not scattered among secular documents.</p>
+                <div class="chart-container chart-tall" id="chart-sacred-umap"></div>
+            </div>
+        </div>
+
+        <!-- Sub-tab 5b: Traditions -->
+        <div class="sub-pane" id="sub-sacred-traditions">
+            <div class="narrative-box" style="margin-bottom:1rem;padding:1rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);">
+                <h3 style="margin:0 0 0.5rem 0;">Religious &amp; Indigenous Traditions</h3>
+                <p style="margin:0;line-height:1.6;">The Governance Genome identifies 15 distinct value traditions invoked in AI governance documents, from secular human rights frameworks to specific religious and indigenous knowledge systems. This sub-tab maps which traditions are represented, how they co-occur within documents, and their relative scale in the corpus. The emergence of tradition-based governance &mdash; from zero statements before 2017 to 125 by 2026 &mdash; is one of the most distinctive findings of this analysis.</p>
+            </div>
+            <div class="chart-card">
+                <h3>Tradition Composition Treemap</h3>
+                <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">Proportional area map of all traditions invoked across the corpus. Secular and human rights frameworks dominate by volume, but religious traditions (Christian, Islamic, Buddhist, Jewish, Hindu) and indigenous wisdom collectively constitute a significant minority. The treemap reveals governance pluralism invisible in prior mapping studies.</p>
+                <div class="chart-container" id="chart-tradition-treemap" style="height: 400px;"></div>
+            </div>
+            <div class="chart-card">
+                <h3>Tradition Co-occurrence Network</h3>
+                <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">Nodes are traditions; edges connect traditions that are invoked together in the same document. Edge thickness reflects co-occurrence frequency. Dense clusters reveal tradition families that travel together &mdash; e.g., Islamic concepts (Islamic + care ethics) or interfaith documents (Christian + Jewish + Islamic). Isolated nodes indicate traditions that rarely appear alongside others.</p>
+                <div class="chart-container" id="chart-tradition-network" style="height: 400px;"></div>
+            </div>
+            <div class="chart-card">
+                <h3>Tradition Detail Table</h3>
+                <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">Full statistics for each tradition: count of documents invoking it, percentage of corpus, mean sacred-secular score, and cluster distribution. Sortable by any column.</p>
+                <div id="tradition-table">
+                    <!-- JS will populate -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Sub-tab 5c: Tradition Correlations -->
+        <div class="sub-pane" id="sub-sacred-tradition-corr">
+            <div class="narrative-box" style="margin-bottom:1rem;padding:1rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);">
+                <h3 style="margin:0 0 0.5rem 0;">Tradition Pairwise Correlations</h3>
+                <p style="margin:0;line-height:1.6;">This heatmap shows pairwise Phi coefficients between all tradition invocations. Phi measures the association between two binary variables (tradition invoked vs. not invoked). Values near +1 indicate traditions that co-occur strongly; values near 0 indicate independence; negative values indicate mutual exclusion. Statistical significance is Bonferroni-corrected for multiple comparisons.</p>
+            </div>
+            <div class="chart-card">
+                <h3>Pairwise Phi Coefficients</h3>
+                <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">Each cell shows the Phi coefficient between two traditions. Red/warm cells indicate positive association (traditions that appear together); blue/cool cells indicate negative association (traditions that rarely co-occur). The diagonal is always 1.0 (perfect self-correlation). Look for clusters of warm cells that reveal tradition &lsquo;families&rsquo; &mdash; groups of traditions that function as integrated knowledge systems rather than independent principles.</p>
+                <div class="chart-container chart-tall" id="chart-tradition-corr-heatmap"></div>
+            </div>
+            <div class="narrative-box">
+                <strong>Bonferroni correction:</strong> With multiple pairwise comparisons across religious and
+                philosophical traditions, we apply Bonferroni correction to control the family-wise error rate.
+                Only correlations significant at <em>p</em> &lt; 0.05 / <em>k</em> (where <em>k</em> is the
+                number of pairwise tests) are shown as non-grey cells. This conservative threshold reduces
+                false-positive tradition associations while preserving genuinely strong co-occurrence patterns.
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== TAB 6: Enforcement ==================== -->
+    <section class="tab-pane" id="pane-enforcement" role="tabpanel">
+
+        <div class="narrative-box" style="margin-bottom:1rem;padding:1rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);">
+            <h3 style="margin:0 0 0.5rem 0;">Enforcement &amp; Legal Force</h3>
+            <p style="margin:0;line-height:1.6;">One of the most striking patterns in the data is the <strong>enforcement-rhetoric inverse</strong>: documents with the richest ethical commitments tend to be non-binding, while documents with real legal force have traded rights language for risk metrics. This tab examines how binding nature (legally binding, soft law, advisory, aspirational) distributes across the 6 policy families, and how enforcement capacity relates to governance specificity and stakeholder breadth.</p>
+        </div>
+
+        <div class="chart-card">
+            <h3>Binding Nature &times; Family Heatmap</h3>
+            <p class="chart-desc">Cell intensity shows how many statements of each binding type fall in each family. Risk Regulators (Family 6) concentrate legally binding instruments (60.6% of all binding docs). Human Rights Advocates (Family 4) are overwhelmingly soft law or aspirational. This is the structural signature of the enforcement-rhetoric inverse.</p>
+            <div class="chart-container" id="chart-binding-heatmap" style="height: 400px;"></div>
+        </div>
+
+        <div class="chart-grid-2">
+            <div class="chart-card">
+                <h3>Enforcement Gradient &mdash; Soft to Hard Law</h3>
+                <p class="chart-desc">Statements arranged along a soft-to-hard law spectrum. The gradient reveals whether families cluster at particular enforcement levels or spread across the spectrum. Innovation Champions cluster at the soft end; Risk Regulators at the hard end.</p>
+                <div class="chart-container" id="chart-enforce-gradient"></div>
+            </div>
+            <div class="chart-card">
+                <h3>Inverse Relationship: Specificity vs Breadth</h3>
+                <p class="chart-desc">Each point represents a cluster of statements. The x-axis measures governance specificity (how concrete the prescriptions are); the y-axis measures stakeholder breadth (how many audiences are addressed). Documents that are highly specific tend to address narrow audiences (sector-specific regulation), while broad documents tend to be vague (aspirational declarations).</p>
+                <div class="chart-container" id="chart-enforce-inverse"></div>
+            </div>
+        </div>
+
+        <div class="narrative-box" style="margin-top:1rem;padding:1rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);">
+            <strong>Implication:</strong> The global AI governance system has structurally separated its moral ambition from its enforcement capacity. Rights-rich documents are toothless; enforceable documents are rights-thin. This is not a bug in any particular document &mdash; it is an architectural pattern in the system as a whole. Bridging this gap is perhaps the most important challenge facing AI governance.
+        </div>
+    </section>
+
+    <!-- ==================== TAB 7: Channels ==================== -->
+    <section class="tab-pane" id="pane-channels" role="tabpanel">
+
+        <div class="sub-nav">
+            <button class="sub-btn active" data-sub="channels-ablation">Ablation</button>
+            <button class="sub-btn" data-sub="channels-features">Features</button>
+        </div>
+
+        <!-- Sub-tab 7a: Ablation -->
+        <div class="sub-pane active" id="sub-channels-ablation">
+            <div class="narrative-box" style="margin-bottom:1rem;padding:1rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);">
+                <h3 style="margin:0 0 0.5rem 0;">Channel Ablation &mdash; Which Channels Drive Cluster Structure?</h3>
+                <p style="margin:0;line-height:1.6;">The Governance Genome encodes each statement across 3 channels: <strong>C1 Content</strong> (155 dimensions &mdash; what the document says about transparency, fairness, safety, etc.), <strong>C2 Form</strong> (26 dimensions &mdash; who wrote it, for whom, how binding), and <strong>C3 Anchored Embeddings</strong> (45 dimensions &mdash; semantic similarity to 45 concept anchors). Ablation analysis removes one channel at a time and re-clusters to measure each channel&rsquo;s contribution. Bootstrap 95% confidence intervals quantify uncertainty.</p>
+            </div>
+            <div class="chart-grid-2">
+                <div class="chart-card">
+                    <h3>Channel Ablation with Bootstrap 95% CIs</h3>
+                    <p class="chart-desc">Each bar shows the silhouette score when clustering with a specific channel combination. Error whiskers show 95% bootstrap CIs (500 iterations). The &lsquo;All channels&rsquo; bar is the baseline. If removing a channel barely changes silhouette, that channel contributes little to cluster structure. If removing it collapses the score, it is essential.</p>
+                    <div class="chart-container" id="chart-ablation-bar" style="height: 400px;"></div>
+                </div>
+                <div class="chart-card">
+                    <h3>Channel Dimension Share</h3>
+                    <p class="chart-desc">Proportional breakdown of the 226 genome dimensions by channel. C1 Content accounts for the majority of dimensions (155/226 = 69%), but C2 Form features show higher raw discriminative power despite having only 26 dimensions &mdash; though approximately 70% of this gap is attributable to encoding asymmetry between categorical and continuous features (see Encoding-Matched tab).</p>
+                    <div class="chart-container" id="chart-channel-pie" style="height: 300px;"></div>
+                </div>
+            </div>
+            <div class="finding-card" id="ablation-finding">
+                <!-- JS will populate ablation key finding -->
+            </div>
+        </div>
+
+        <!-- Sub-tab 7b: Features -->
+        <div class="sub-pane" id="sub-channels-features">
+            <div class="narrative-box" style="margin-bottom:1rem;padding:1rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);">
+                <h3 style="margin:0 0 0.5rem 0;">Feature Analysis &amp; Sensitivity</h3>
+                <p style="margin:0;line-height:1.6;">Of the original 374 genome dimensions, 347 survived variance-based pruning (features with near-zero variance across statements were removed). This sub-tab examines which of the retained features are most discriminative for cluster assignment, how sparse different channels are, and whether the results are sensitive to feature selection thresholds and UMAP hyperparameters.</p>
+            </div>
+            <div class="chart-card">
+                <h3>Top 30 Discriminative Features</h3>
+                <p class="chart-desc">Features ranked by discriminative power (F-statistic from one-way ANOVA across 6 clusters). Color indicates channel: orange = C1 Content, blue = C2 Form, green = C3 Anchored. C2 features rank higher despite being a minority of total dimensions, though encoding asymmetry between categorical and continuous features accounts for approximately 70% of this gap.</p>
+                <div class="chart-container chart-tall" id="chart-top-features"></div>
+            </div>
+            <div class="chart-card">
+                <h3>Sparsity Distribution by Channel</h3>
+                <p class="chart-desc">Fraction of zero values per channel. C1 Content fields tend to be sparser (many documents don&rsquo;t discuss religious or indigenous concepts), while C2 Form fields are denser (every document has a binding nature and governance posture). High sparsity can inflate discriminative power for niche fields.</p>
+                <div class="chart-container" id="chart-sparse-bar" style="height: 300px;"></div>
+            </div>
+            <div class="chart-card">
+                <h3>Inter-Channel Correlation</h3>
+                <p class="chart-desc">Pairwise correlation between channel-level aggregate scores. Low correlations confirm the channels capture genuinely independent aspects of governance documents &mdash; form, content, and semantic positioning provide non-redundant information.</p>
+                <div class="corr-table-wrapper" id="corr-table">
+                    <!-- JS will populate correlation table -->
+                </div>
+            </div>
+            <div class="chart-card">
+                <h3>Feature Selection Sensitivity</h3>
+                <p class="chart-desc">How stable are the results under different variance-pruning thresholds? If the top features remain consistent across thresholds, the analysis is robust to this preprocessing choice.</p>
+                <div id="feature-sensitivity-table"></div>
+            </div>
+            <div class="chart-card">
+                <h3>UMAP Parameter Sensitivity</h3>
+                <p class="chart-desc">UMAP projections depend on hyperparameters (n_neighbors, min_dist). This table shows silhouette scores across parameter combinations, confirming that the 6-family structure is not an artifact of a specific UMAP configuration.</p>
+                <div id="umap-sensitivity-table"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== TAB: Encoding-Matched ==================== -->
+    <section class="tab-pane" id="pane-encoding-matched" role="tabpanel">
+
+        <div class="narrative-box" style="margin-bottom:1.5rem;padding:1.2rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);">
+            <h2 style="margin:0 0 0.8rem 0;font-size:1.3rem;">Encoding-Matched Ablation</h2>
+            <p style="margin:0;line-height:1.6;">Testing whether the form-content gap survives when encoding asymmetry is removed</p>
+        </div>
+
+        <!-- KPIs row -->
+        <div class="kpi-grid" style="margin-bottom:1.5rem;">
+            <div class="kpi-card">
+                <div class="kpi-value">0.180</div>
+                <div class="kpi-label">Original Gap</div>
+                <div style="font-size:0.72rem;color:var(--text-muted);margin-top:0.25rem;">C2 sil (0.153) &minus; C1 sil (&minus;0.028)</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value">0.053</div>
+                <div class="kpi-label">Matched Gap</div>
+                <div style="font-size:0.72rem;color:var(--text-muted);margin-top:0.25rem;">C2 sil (0.153) &minus; C1-matched sil (0.099)</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value" style="color:#10b981;">70.5%</div>
+                <div class="kpi-label">Gap Reduction</div>
+                <div style="font-size:0.72rem;color:var(--text-muted);margin-top:0.25rem;">Encoding artifact share</div>
+            </div>
+            <div class="kpi-card">
+                <div class="kpi-value">0.306</div>
+                <div class="kpi-label">Gower ARI</div>
+                <div style="font-size:0.72rem;color:var(--text-muted);margin-top:0.25rem;">vs K-Means k=6</div>
+            </div>
+        </div>
+
+        <!-- Explanation -->
+        <div class="chart-card" style="margin-bottom:1.5rem;">
+            <div class="card-body" style="padding:1.2rem;">
+                <h3 style="margin:0 0 0.8rem 0;">The Encoding Artifact</h3>
+                <p>The original channel ablation reported a silhouette gap of 0.180 between C2 (institutional form, 0.153) and C1 (substantive content, &minus;0.028). This appeared to show that institutional form overwhelmingly dominates governance clustering.</p>
+                <p>However, C2 features are predominantly <strong>categorical</strong> (one-hot encoded into sharp binary boundaries), while C1 features are <strong>continuous</strong> (0&ndash;100 scores normalized to 0&ndash;1). K-means clustering exploits hard categorical boundaries more effectively than smooth gradients &mdash; this is a mathematical property of the distance metric, not a substantive finding about governance.</p>
+                <p>The encoding-matched ablation bins C1&rsquo;s continuous scores into 5 ordinal levels matching the coding rubric anchors (0/15/40/65/90), then one-hot encodes them &mdash; giving C1 the same geometric structure as C2. Under matched encoding, the gap narrows from 0.180 to <strong>0.053</strong> &mdash; a reduction of <strong>70.5%</strong>.</p>
+                <p style="margin-bottom:0;"><strong>Interpretation:</strong> Approximately 70% of the original form-content gap was an encoding artifact. The residual 30% represents genuine structural asymmetry: in a landscape where governance documents converge on similar principles, institutional form becomes the primary axis of remaining differentiation. This is the <em>convergence-divergence interaction</em> &mdash; the central empirical finding of the Governance Genome.</p>
+            </div>
+        </div>
+
+        <!-- Chart placeholders -->
+        <div class="chart-grid-2">
+            <div class="chart-card">
+                <h3>Channel Ablation: Original vs Encoding-Matched</h3>
+                <div class="chart-container" id="chart-encoding-ablation" style="height:400px;"></div>
+            </div>
+            <div class="chart-card">
+                <h3>Per-Class F1 Scores</h3>
+                <div class="chart-container" id="chart-per-class-f1" style="height:400px;"></div>
+            </div>
+        </div>
+
+        <!-- Tables -->
+        <div class="chart-grid-2" style="margin-top:1rem;">
+            <div class="chart-card">
+                <h3>Gower Distance Clustering</h3>
+                <p class="chart-desc">K-medoids with Gower distance (encoding-agnostic mixed-type metric)</p>
+                <table class="data-table">
+                    <thead><tr><th>k</th><th>Silhouette</th><th>ARI vs K-Means</th></tr></thead>
+                    <tbody>
+                        <tr><td>5</td><td>0.067</td><td>0.326</td></tr>
+                        <tr><td>6</td><td>0.069</td><td>0.306</td></tr>
+                        <tr><td>7</td><td>0.050</td><td>0.278</td></tr>
+                    </tbody>
+                </table>
+                <p class="chart-desc" style="margin-top:0.5rem;">Moderate agreement (ARI ~0.3) indicates some but not all cluster structure transfers across distance metrics.</p>
+            </div>
+            <div class="chart-card">
+                <h3>Organization Independence</h3>
+                <p class="chart-desc">Non-independence of observations (critique C9)</p>
+                <table class="data-table">
+                    <thead><tr><th>Metric</th><th>Value</th></tr></thead>
+                    <tbody>
+                        <tr><td>Unique organizations</td><td>2,088</td></tr>
+                        <tr><td>Multi-statement orgs</td><td>485 (23.2%)</td></tr>
+                        <tr><td>Statements from multi-statement orgs</td><td>47.3%</td></tr>
+                        <tr><td>Most prolific: OHCHR</td><td>25 statements</td></tr>
+                    </tbody>
+                </table>
+                <p class="chart-desc" style="margin-top:0.5rem;">47.3% of statements from multi-statement orgs. Organization-clustered standard errors and multilevel models are recommended for future work.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== TAB 8: Anchors ==================== -->
+    <section class="tab-pane" id="pane-anchors" role="tabpanel">
+
+            <div class="narrative-box" style="margin-bottom:1rem;padding:1rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);">
+                <h3 style="margin:0 0 0.5rem 0;">Concept Anchors &mdash; The C3 Embedding Channel</h3>
+                <p style="margin:0;line-height:1.6;">The C3 channel measures each statement&rsquo;s semantic similarity to 45 &ldquo;anchor&rdquo; documents &mdash; carefully selected exemplars spanning the full governance landscape (from the EU AI Act to the Rome Call for AI Ethics to the CARE Principles for Indigenous Data). Each anchor acts as a conceptual landmark: a statement&rsquo;s cosine similarity to anchor <em>i</em> measures how closely it aligns with that anchor&rsquo;s governance philosophy. The F-statistic shows which anchors best discriminate between the 6 policy families.</p>
+            </div>
+
+        <div class="chart-card">
+            <h3>Anchor Discriminative Power (F-statistic)</h3>
+            <p>Each bar represents one of 45 anchors, ranked by F-statistic (one-way ANOVA across 6 families). Higher F-statistics indicate anchors whose similarity scores differ sharply across families &mdash; these are the conceptual dimensions that best separate the governance landscape. Religious and indigenous anchors tend to score highest because they activate exclusively on tradition-specific documents.</p>
+            <div class="chart-container" id="chart-anchor-discrim" style="height: 400px;"></div>
+        </div>
+
+        <div class="chart-card">
+            <h3>Anchor Intensity Heatmap (Family &times; Anchor)</h3>
+            <p>Rows are the 6 policy families; columns are 45 anchors. Cell intensity shows the mean cosine similarity of that family to that anchor. Bright columns indicate anchors that activate broadly; bright rows indicate families with strong conceptual profiles. Dark cells reveal conceptual blind spots &mdash; governance dimensions that a family does not engage with.</p>
+            <div class="chart-container" id="chart-anchor-heatmap" style="height: 400px;"></div>
+        </div>
+
+            <div class="narrative-box" style="margin-top:1rem;padding:1rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);">
+                <strong>Key finding:</strong> The anchor analysis reveals that tradition-specific governance concepts (indigenous data sovereignty, Islamic jurisprudence, Christian theological anthropology) are the sharpest discriminators between policy families. This is because these concepts have near-zero activation outside their originating tradition, creating stark contrasts. General governance concepts (transparency, accountability, fairness) discriminate poorly because they appear across all families &mdash; confirming the &ldquo;superficial consensus&rdquo; finding documented in prior literature.
+            </div>
+    </section>
+
+    <!-- ==================== TAB 9: Innovation-Rights ==================== -->
+    <section class="tab-pane" id="pane-innovation-rights" role="tabpanel">
+
+            <div class="narrative-box" style="margin-bottom:1rem;padding:1rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);">
+                <h3 style="margin:0 0 0.5rem 0;">The Innovation-Rights Trade-off</h3>
+                <p style="margin:0;line-height:1.6;">A central axis of AI governance is the tension between promoting innovation and protecting rights. Each statement is scored on <code>gn_innovation_orientation</code> (0=precautionary, 100=innovation-enabling) and a composite rights score (human dignity, informed consent, digital labor rights). If the global governance system were achieving synthesis, many statements would score high on both. Instead, the data reveals a strong negative correlation (Spearman &rho;&nbsp;=&nbsp;&minus;0.41, p&nbsp;&lt;&nbsp;10<sup>&minus;82</sup>): innovation-first and rights-first framing are empirically opposed.</p>
+            </div>
+
+        <div class="chart-grid-2">
+            <div class="chart-card">
+                <h3>Innovation vs Rights by Policy Family</h3>
+                <p>Mean innovation orientation and rights composite scores for each of the 6 policy families. <span style="color:#22c55e;">Green bars</span> = innovation mean, <span style="color:#dc2626;">red bars</span> = rights mean. Innovation Champions score 73.8 on innovation but only 2.5 on rights. The stark asymmetry confirms the trade-off is structural, not incidental.</p>
+                <div class="chart-container" id="chart-paradigm-dist"></div>
+            </div>
+            <div class="chart-card">
+                <h3>Regional Innovation-Rights Ratio</h3>
+                <p>For each region, the ratio of innovation-oriented to rights-oriented statements. Ratios above 1.0 indicate innovation dominance. Africa (5.1:1) and Asia-Pacific show the strongest innovation-first tendency; Europe leans toward rights.</p>
+                <div class="chart-container" id="chart-region-ratio"></div>
+            </div>
+        </div>
+
+        <div class="chart-card">
+            <h3>Paradigm Balance Over Time</h3>
+            <p>How the innovation-vs-rights balance has shifted across three eras: pre-2020 (innovation-dominant), 2020&ndash;2022 (crossover), and 2023&ndash;2026 (regulatory turn). The 2020 crossover coincides with the EU AI Act legislative process.</p>
+            <div class="chart-container" id="chart-paradigm-temporal"></div>
+        </div>
+
+        <div class="chart-card">
+            <h3>Statement-Level Innovation vs Rights</h3>
+            <p>Each dot is one statement, positioned by innovation orientation (x-axis) and rights composite (y-axis). The empty upper-right quadrant confirms that no documents successfully integrate high innovation promotion with strong rights protections &mdash; the &lsquo;both/and&rsquo; synthesis has not materialized.</p>
+            <div class="chart-container chart-tall" id="chart-ir-scatter"></div>
+        </div>
+
+            <div class="narrative-box" style="margin-top:1rem;padding:1rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);">
+                <strong>Bottom line:</strong> The innovation-rights trade-off is the sharpest axis of disagreement in global AI governance. The empty upper-right quadrant of the scatter plot &mdash; where innovation-promoting, rights-protective documents would appear &mdash; represents the governance synthesis that policymakers aspire to but have not yet achieved. The closest approximation is the &ldquo;Unclassified / Residual&rdquo; category, which achieves balance through vagueness rather than genuine integration.
+            </div>
+    </section>
+
+    <!-- ==================== TAB 10: Methods ==================== -->
+    <section class="tab-pane" id="pane-methods" role="tabpanel">
+
+        <!-- Architecture Diagram -->
+        <div class="method-section">
+            <h3>Three-Channel Architecture</h3>
+            <p>The Governance Genome encodes each AI governance statement across three complementary channels,
+               each capturing a distinct analytical lens on the document.</p>
+            <div class="pipeline-flow">
+                <div class="pipeline-step highlight">
+                    <div class="step-value">C1</div>
+                    <div class="step-label">Content<br>155 dims</div>
+                </div>
+                <span class="pipeline-arrow">&rarr;</span>
+                <div class="pipeline-step highlight">
+                    <div class="step-value">C2</div>
+                    <div class="step-label">Form<br>26 dims</div>
+                </div>
+                <span class="pipeline-arrow">&rarr;</span>
+                <div class="pipeline-step">
+                    <div class="step-value">C3</div>
+                    <div class="step-label">Anchored<br>45 dims</div>
+                </div>
+                <span class="pipeline-arrow">=</span>
+                <div class="pipeline-step highlight">
+                    <div class="step-value">226</div>
+                    <div class="step-label">Total Dims</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Methodology -->
+        <div class="method-section">
+            <h3>Methodology</h3>
+            <p>This study uses <strong>computational concept induction</strong> to identify recurring structural
+               and substantive patterns across 2,021 AI governance statements. Each statement is scored on 181
+               genome dimensions (155 content + 26 form) using LLM-based structured expert simulation with
+               calibrated 5-level rubrics. The resulting high-dimensional vectors are then subjected to
+               variance-based feature selection, K-means clustering, and UMAP projection to reveal emergent
+               policy families. This approach is exploratory and data-driven; the resulting clusters describe
+               empirical co-occurrence patterns, not normative categories.</p>
+        </div>
+
+        <!-- Coding Methodology -->
+        <div class="method-section">
+            <h3>Coding Methodology</h3>
+            <p>All 181 genome dimensions were scored by LLM-based structured expert simulation (Claude,
+               Anthropic) using calibrated rubrics with 5-level ordinal anchors. Each scoring agent received
+               the full document text and a dimension-specific rubric. 246 scoring agents operated across
+               3 sessions with rate-limit-safe batching. The table below documents the provenance of each
+               methodological decision.</p>
+            <div class="chart-card">
+                <div id="methodology-provenance-table"></div>
+            </div>
+        </div>
+
+        <!-- Pipeline Phases -->
+        <div class="method-section">
+            <h3>Pipeline Phases</h3>
+            <div class="chart-card">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Phase</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>0</td>
+                            <td>Schema Design</td>
+                            <td>Define 3-channel architecture: C1 content (155), C2 form (26), C3 anchored (45)</td>
+                            <td style="color: var(--success);">Complete</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>C2 Form Coding</td>
+                            <td>Score structural/procedural metadata for 2,021 statements (26 gn_ fields)</td>
+                            <td style="color: var(--success);">Complete</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>C1 Content Coding</td>
+                            <td>Score substantive content dimensions for 2,021 statements (155 gn_ fields)</td>
+                            <td style="color: var(--success);">Complete</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Quality Audit</td>
+                            <td>Validate all 2,021 statements have exactly 181 gn_ fields (C1 + C2)</td>
+                            <td style="color: var(--success);">Complete</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Feature Selection</td>
+                            <td>Variance-based pruning, column weighting, correlation filtering</td>
+                            <td style="color: var(--success);">Complete</td>
+                        </tr>
+                        <tr>
+                            <td>4b</td>
+                            <td>Clustering</td>
+                            <td>K-means clustering (k=6), silhouette analysis, UMAP projection</td>
+                            <td style="color: var(--success);">Complete</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>C3 Anchored Embeddings</td>
+                            <td>Sentence-transformer embeddings anchored to 45 concept seeds</td>
+                            <td style="color: var(--warning);">Next</td>
+                        </tr>
+                        <tr>
+                            <td>6&ndash;8</td>
+                            <td>Analysis &amp; Reporting</td>
+                            <td>Cross-tabulations, temporal analysis, family profiling, dashboard generation</td>
+                            <td style="color: var(--text-muted);">Planned</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Score Scale -->
+        <div class="method-section">
+            <h3>Scoring Scale</h3>
+            <p>Each genome dimension is scored on a 5-level ordinal scale (0&ndash;100), with calibrated anchor descriptions per dimension.</p>
+            <div class="score-scale">
+                <div class="scale-item">
+                    <div class="scale-range">0</div>
+                    <div class="scale-label">Absent / Not Applicable</div>
+                </div>
+                <div class="scale-item">
+                    <div class="scale-range">15</div>
+                    <div class="scale-label">Minimal / Passing Mention</div>
+                </div>
+                <div class="scale-item">
+                    <div class="scale-range">40</div>
+                    <div class="scale-label">Moderate / Partial</div>
+                </div>
+                <div class="scale-item">
+                    <div class="scale-range">65</div>
+                    <div class="scale-label">Substantial / Detailed</div>
+                </div>
+                <div class="scale-item">
+                    <div class="scale-range">90</div>
+                    <div class="scale-label">Comprehensive / Central</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reliability Metrics -->
+        <div class="method-section">
+            <h3>Reliability Metrics</h3>
+            <div class="chart-card">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Value</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Statements scored</td>
+                            <td><strong>2,021</strong></td>
+                            <td>Quality-gated from 3,044 total</td>
+                        </tr>
+                        <tr>
+                            <td>Total data points</td>
+                            <td><strong>365,801</strong></td>
+                            <td>2,021 &times; 181 gn_ fields</td>
+                        </tr>
+                        <tr>
+                            <td>Scoring agents</td>
+                            <td><strong>246</strong></td>
+                            <td>LLM-based structured expert simulation across 3 sessions</td>
+                        </tr>
+                        <tr>
+                            <td>Field completeness</td>
+                            <td><strong>100%</strong></td>
+                            <td>All 2,021 = exactly 181 gn_ fields</td>
+                        </tr>
+                        <tr>
+                            <td>Silhouette (k=6)</td>
+                            <td><strong>0.155</strong></td>
+                            <td>C1 + C2 channels only (Phase 4b)</td>
+                        </tr>
+                        <tr>
+                            <td>Features retained</td>
+                            <td><strong>347 / 374</strong></td>
+                            <td>After variance-based pruning</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- What This Study Cannot Tell You -->
+        <div class="method-section">
+            <h3>Limitations</h3>
+            <div class="caveat-box">
+                <h4>What This Study Cannot Tell You</h4>
+                <ul>
+                    <li><strong>Causal claims:</strong> Cluster membership reflects co-occurrence of coded features, not causal mechanisms. A statement appearing in the "Development-Oriented" family does not mean its authors prioritized innovation over rights.</li>
+                    <li><strong>Implementation or impact:</strong> The genome encodes what statements <em>say</em>, not what institutions <em>do</em>. A high enforcement score reflects textual specificity, not real-world compliance.</li>
+                    <li><strong>Representativeness:</strong> The corpus covers dozens of countries and multiple institution types, but is not a probability sample. English-language and digitally accessible documents are over-represented.</li>
+                    <li><strong>Ground truth for clustering:</strong> There is no external gold standard for "correct" policy families. The k=6 solution is one defensible partition; other values of k yield different but plausible groupings (see Stability subtab).</li>
+                    <li><strong>Tradition-specific nuance:</strong> Scoring tradition-specific governance concepts (e.g., Islamic jurisprudence, Indigenous data sovereignty) through a standardized rubric inevitably compresses culturally embedded meanings.</li>
+                </ul>
+            </div>
+            <div class="caveat-box">
+                <h4>How This Research Could Be Misused</h4>
+                <ul>
+                    <li><strong>Ranking or grading jurisdictions:</strong> Policy families are descriptive clusters, not quality tiers. Using cluster labels to rank countries as "more advanced" or "less developed" in AI governance would be a misapplication.</li>
+                    <li><strong>Cherry-picking to justify predetermined positions:</strong> The high dimensionality of the genome means that selective emphasis on particular dimensions can support almost any narrative. Always consider the full vector.</li>
+                    <li><strong>Conflating coding scores with policy quality:</strong> A low score on a dimension (e.g., enforcement specificity) may reflect deliberate policy design (e.g., principles-first approach), not a deficiency.</li>
+                    <li><strong>Treating LLM-generated scores as human expert judgment:</strong> All scores were produced by LLM-based structured expert simulation, not by domain experts. They should be treated as systematic approximations, not authoritative assessments.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- LLM Methodology Disclosure -->
+        <div class="method-section">
+            <h3>LLM-Based Structured Expert Simulation</h3>
+            <p>The genome schema, scoring rubrics, and clustering parameters were developed through
+               LLM-based structured expert simulation. This approach uses large language models prompted
+               with domain-specific personas and calibrated rubrics to produce systematic, reproducible
+               scores across all 2,021 statements. The methodology is fully automated and deterministic
+               given the same model, prompts, and documents.</p>
+            <div class="council-grid">
+                <div class="council-member">
+                    <strong>Schema Design</strong>
+                    LLM-simulated 8-expert panel, 43 seed concepts, 3-channel architecture
+                </div>
+                <div class="council-member">
+                    <strong>C1 Content Rubrics</strong>
+                    155 dimension rubrics with calibrated 5-level anchors
+                </div>
+                <div class="council-member">
+                    <strong>C2 Form Rubrics</strong>
+                    26 structural/procedural dimension rubrics
+                </div>
+                <div class="council-member">
+                    <strong>Quality Assurance</strong>
+                    Multi-pass validation, 100% field completeness verification
+                </div>
+            </div>
+        </div>
+
+        <!-- Citation -->
+        <div class="method-section">
+            <h3>Citation</h3>
+            <div class="narrative-box">
+                <strong>Tapestry</strong> (Lin, 2026). <em>The Global AI Principles &amp; Governance Database.</em>
+                Governance Genome module: Fingerprint 2.0 "The Prism" &mdash; 3-channel encoding of 2,021 AI governance
+                statements across 226 dimensions. Available at:
+                <a href="https://github.com/cjimmylin/cei-ai-statements">github.com/cjimmylin/cei-ai-statements</a>.
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== TAB 11: RFGini2b ==================== -->
+    <section class="tab-pane" id="pane-rfgini2b" role="tabpanel">
+
+        <div class="sub-nav">
+            <button class="sub-btn active" data-sub="rfg-validation">Validation</button>
+            <button class="sub-btn" data-sub="rfg-robustness">Robustness</button>
+            <button class="sub-btn" data-sub="rfg-reliability">Reliability</button>
+        </div>
+
+        <!-- Tab introduction -->
+        <div class="narrative-box" style="margin-bottom:1.5rem;padding:1.2rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);">
+            <h2 style="margin:0 0 0.8rem 0;font-size:1.3rem;">Validation, Robustness &amp; Reliability</h2>
+            <p style="margin:0 0 0.6rem 0;line-height:1.6;">This tab presents three complementary analyses that assess the <strong>trustworthiness</strong> of the Governance Genome clustering. The 6 policy families identified in the main analysis are only meaningful if they are (1)&nbsp;<strong>internally valid</strong> &mdash; genuinely separable by a classifier, (2)&nbsp;<strong>robust</strong> &mdash; not artifacts of a specific embedding model, and (3)&nbsp;<strong>reliable</strong> &mdash; reproducible across different prompt phrasings.</p>
+            <p style="margin:0;line-height:1.6;opacity:0.85;font-size:0.9rem;"><strong>Method:</strong> A Random Forest classifier (200 trees, 5-fold CV) tests cluster separability. Cross-lingual robustness re-embeds all 2,021 statements with a uniform multilingual model. Inter-rater reliability uses 3 LLM coders with different prompt variants (standard, rephrased, re-anchored scale) on 200 stratified statements across all 156 scoring dimensions.</p>
+        </div>
+
+        <!-- Sub-tab A: Validation -->
+        <div class="sub-pane active" id="sub-rfg-validation">
+            <div class="narrative-box" style="margin-bottom:1rem;padding:1rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);">
+                <h3 style="margin:0 0 0.5rem 0;">Cluster Validation via Random Forest Classification</h3>
+                <p style="margin:0;line-height:1.6;">If the 6 policy families represent genuinely distinct governance approaches, a classifier trained on the genome dimensions should be able to predict which family a statement belongs to. We train a 200-tree Random Forest on the 226-dimensional genome vectors, using 70/30 train-test split and 5-fold cross-validation. High accuracy (&gt;90%) confirms that the clusters capture real, separable structure in the data &mdash; not noise.</p>
+            </div>
+            <div class="kpi-grid" id="rfg-validation-kpi"></div>
+            <div class="narrative-box" style="margin-bottom:1rem;padding:0.8rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);font-size:0.88rem;line-height:1.5;">
+                <strong>Reading the KPIs:</strong> <em>RF Accuracy</em> is the mean 5-fold cross-validation accuracy. <em>Test Accuracy</em> is the held-out 30% performance. <em>Form-Only Acc</em> shows that C2 form features alone achieve 86.2% &mdash; though approximately 70% of the form-content gap is attributable to encoding asymmetry (see Encoding-Matched tab). <em>IR Spearman &rho;</em> measures the innovation-vs-rights trade-off correlation. <em>ARI</em> (Adjusted Rand Index) measures overlap with org_type &mdash; low values mean clusters discover novel structure beyond institutional identity. <em>Cram&eacute;r's V</em> measures association strength.
+            </div>
+            <div class="chart-grid-2">
+                <div class="chart-card">
+                    <h3>RF Classification Accuracy (5-Fold CV)</h3>
+                    <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">Each bar shows the accuracy of one CV fold. The red dashed line marks the mean. Consistent bars indicate stable performance across data splits.</p>
+                    <div class="chart-container" id="chart-rfg-cv-accuracy"></div>
+                </div>
+                <div class="chart-card">
+                    <h3>Per-Cluster F1 Score</h3>
+                    <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">F1 combines precision and recall per family. Higher bars mean the classifier reliably identifies that family. Lower F1 (e.g., Professional) suggests boundary overlap with neighboring clusters.</p>
+                    <div class="chart-container" id="chart-rfg-f1"></div>
+                </div>
+            </div>
+            <div class="chart-card">
+                <h3>Confusion Matrix (6 &times; 6)</h3>
+                <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">Rows = true family, columns = predicted family. Bright diagonal = correct predictions. Off-diagonal cells reveal which families the classifier confuses &mdash; e.g., Professional (C4) and Regulatory (C5) may share form features like standards-based governance.</p>
+                <div class="chart-container" id="chart-rfg-confusion" style="height:420px;"></div>
+            </div>
+            <div class="chart-grid-2">
+                <div class="chart-card">
+                    <h3>Permutation Importance (Top 30)</h3>
+                    <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">Features ranked by how much accuracy drops when their values are shuffled. <span style="color:#56B4E9;">Blue = C2 Form</span>, <span style="color:#E69F00;">Orange = C1 Content</span>, <span style="color:#009E73;">Green = C3 Anchored</span>. C2 features appear more important, though approximately 70% of the form-content gap is attributable to encoding asymmetry between categorical and continuous features (see Encoding-Matched tab).</p>
+                    <div class="chart-container chart-tall" id="chart-rfg-perm-importance"></div>
+                </div>
+                <div class="chart-card">
+                    <h3>Gini Importance (Top 30)</h3>
+                    <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">Gini importance measures how much each feature reduces impurity across all decision tree splits. Unlike permutation importance, this is computed during training. Features high on both lists are the most robust discriminators.</p>
+                    <div class="chart-container chart-tall" id="chart-rfg-gini-importance"></div>
+                </div>
+            </div>
+            <div class="narrative-box" style="margin:1rem 0;padding:1rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);">
+                <strong>Key finding &mdash; convergence-divergence interaction:</strong> The top permutation-importance features are overwhelmingly C2 (form) dimensions: <code>gn_addressee__governments</code>, <code>gn_binding_nature__soft_law</code>, <code>gn_authority_type__sovereign_state</code>. C2 Form features contribute more than C1 Content, though approximately 70% of this gap is attributable to encoding asymmetry between categorical and continuous features (see Encoding-Matched tab). This means institutional form and substantive content interact: convergence on principles makes form the primary axis of remaining differentiation.
+            </div>
+            <div class="chart-grid-2">
+                <div class="chart-card">
+                    <h3>Mediation Analysis &mdash; Model Accuracy</h3>
+                    <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">Each bar shows classifier accuracy using different feature subsets. <em>Org Type Only</em> (47.6%) shows that knowing the institution alone is insufficient. <em>C2 Form Only</em> (86.2%) shows form features have higher raw predictive power, though approximately 70% of the form-content gap is attributable to encoding asymmetry (see Encoding-Matched tab). <em>C1 Content Only</em> (74.5%) adds substantial signal. The gap between C2 and Org Type (+38.6%) proves form captures structure beyond institutional identity.</p>
+                    <div class="chart-container" id="chart-rfg-mediation"></div>
+                </div>
+                <div class="chart-card">
+                    <h3>ARI vs Metadata &amp; Effect Size</h3>
+                    <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">ARI (Adjusted Rand Index) measures cluster-metadata overlap. Values near 0 mean clusters discover novel structure; values near 1 mean they merely replicate the metadata. <em>Cram&eacute;r's V</em> measures association strength. Org_type has moderate V (0.53) but low ARI (0.20), meaning clusters <em>correlate</em> with org type but are not <em>reducible</em> to it.</p>
+                    <div class="chart-container" id="chart-rfg-ari-effect"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sub-tab B: Robustness -->
+        <div class="sub-pane" id="sub-rfg-robustness">
+            <div class="narrative-box" style="margin-bottom:1rem;padding:1rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);">
+                <h3 style="margin:0 0 0.5rem 0;">Cross-Lingual Embedding Robustness</h3>
+                <p style="margin:0 0 0.5rem 0;line-height:1.6;">The Governance Genome uses a <strong>split embedding model</strong>: <code>all-MiniLM-L6-v2</code> for English texts and <code>paraphrase-multilingual-MiniLM-L12-v2</code> for non-English texts. This is a methodological choice &mdash; are the resulting clusters an artifact of using two different models? To test this, we re-embed all 2,021 statements with a single uniform multilingual model and compare the resulting C3 channel scores.</p>
+                <p style="margin:0;line-height:1.6;font-size:0.9rem;opacity:0.85;">A high correlation (r&nbsp;&gt;&nbsp;0.8) would mean the C3 channel is model-invariant. A low correlation with high cluster ARI would mean clusters survive despite C3 changes &mdash; because C2 form features dominate. The latter is what we observe.</p>
+            </div>
+            <div class="kpi-grid" id="rfg-robustness-kpi"></div>
+            <div class="narrative-box" style="margin-bottom:1rem;padding:0.8rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);font-size:0.88rem;line-height:1.5;">
+                <strong>Reading the KPIs:</strong> <em>C3 Pearson r</em> and <em>Spearman &rho;</em> measure how much individual C3 scores change when switching to the uniform model (0.55 = moderate change). <em>Cluster ARI</em> measures whether the 6 families survive the change (0.72 = substantial preservation). <em>EN Cosine</em> shows that English embeddings shift dramatically (0.43) between the two models &mdash; they produce very different vector spaces. <em>Non-EN Cosine</em> is near 1.0 because both pipelines use the same multilingual model for non-English texts.
+            </div>
+            <div class="chart-card">
+                <h3>Per-Anchor C3 Correlation (Pearson r)</h3>
+                <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">Each bar represents one of 45 concept anchors. The Pearson r shows how consistently each anchor&rsquo;s cosine-similarity scores correlate between the original split-model pipeline and the uniform multilingual pipeline. <span style="color:#22c55e;">Green</span> bars (r&nbsp;&gt;&nbsp;0.5) indicate stable anchors; <span style="color:#f59e0b;">yellow</span> (0.3&ndash;0.5) are moderately sensitive; <span style="color:#ef4444;">red</span> (&lt;&nbsp;0.3) are highly model-dependent. Anchors with culturally specific content (e.g., religious texts) tend to be more stable because they activate on distinctive vocabulary.</p>
+                <div class="chart-container" id="chart-rfg-anchor-corr" style="height:600px;"></div>
+            </div>
+            <div class="chart-grid-2">
+                <div class="chart-card">
+                    <h3>Language Cosine Similarity (Top 20)</h3>
+                    <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">For each language, this shows the mean cosine similarity between original and uniform embeddings. English (n=1,590) shows low similarity (0.43) because <code>all-MiniLM-L6-v2</code> and <code>paraphrase-multilingual-MiniLM-L12-v2</code> produce very different vector spaces for English. All other languages score near 1.0 because both pipelines use the same multilingual model.</p>
+                    <div class="chart-container chart-tall" id="chart-rfg-lang-cosine"></div>
+                </div>
+                <div class="chart-card">
+                    <h3>Cluster Size: Original vs Uniform-C3</h3>
+                    <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">When we re-cluster with uniform-C3 embeddings, family sizes shift but the overall structure is preserved (ARI&nbsp;=&nbsp;0.72). Some statements move between families, but the 6-family solution remains stable. This confirms clusters are driven primarily by C2 form features, not C3 embedding artifacts.</p>
+                    <div class="chart-container" id="chart-rfg-cluster-compare"></div>
+                </div>
+            </div>
+            <div class="narrative-box" style="margin-top:1rem;padding:1rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);">
+                <strong>Bottom line:</strong> The C3 anchored-embedding channel is <em>moderately sensitive</em> to embedding model choice (r&nbsp;=&nbsp;0.55), but the <strong>6 policy families are robust</strong> (ARI&nbsp;=&nbsp;0.72). This is a positive finding: the clusters are not an artifact of the specific sentence-transformer model. They survive because C2 form features &mdash; which are model-independent categorical variables &mdash; dominate cluster structure (RF showed C2 alone achieves 86.2% classification accuracy). The split-model approach is a real methodological choice, not a convenience, but it does not compromise the main findings.
+            </div>
+        </div>
+
+        <!-- Sub-tab C: Reliability -->
+        <div class="sub-pane" id="sub-rfg-reliability">
+            <div class="narrative-box" style="margin-bottom:1rem;padding:1rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);">
+                <h3 style="margin:0 0 0.5rem 0;">Expanded Inter-Rater Reliability Study</h3>
+                <p style="margin:0 0 0.5rem 0;line-height:1.6;">The Governance Genome uses LLM-based coding: each statement is scored on 156 dimensions by a Claude model given a structured rubric. A key threat to validity is <strong>prompt sensitivity</strong> &mdash; would different prompt phrasings produce different scores? To test this, we created 3 &ldquo;coders&rdquo; with intentionally varied prompts and scored 200 stratified statements:</p>
+                <ul style="margin:0.3rem 0 0.5rem 1.5rem;line-height:1.7;font-size:0.92rem;">
+                    <li><strong>Coder A</strong> &mdash; Standard descriptions with 0/50/100 scale anchoring</li>
+                    <li><strong>Coder B</strong> &mdash; Rephrased descriptions (&ldquo;How much does the document address: X?&rdquo;), same scale</li>
+                    <li><strong>Coder C</strong> &mdash; Different scale anchoring: 0&nbsp;=&nbsp;absent, 40&nbsp;=&nbsp;briefly touched, 70&nbsp;=&nbsp;substantive, 100&nbsp;=&nbsp;primary focus</li>
+                </ul>
+                <p style="margin:0;line-height:1.6;font-size:0.9rem;opacity:0.85;">We measure agreement using <strong>Krippendorff&rsquo;s &alpha;</strong> (the standard for content analysis reliability; &alpha;&nbsp;&ge;&nbsp;0.67 is acceptable, &ge;&nbsp;0.80 is good), <strong>ICC(3,k)</strong> for interval-scaled scores, <strong>Fleiss&rsquo; &kappa;</strong> for categorical enums, and <strong>Jaccard similarity</strong> for multi-label tag-lists.</p>
+            </div>
+            <div class="kpi-grid" id="rfg-reliability-kpi"></div>
+            <div class="narrative-box" style="margin-bottom:1rem;padding:0.8rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);font-size:0.88rem;line-height:1.5;">
+                <strong>Reading the KPIs:</strong> <em>Score &alpha; (mean/median)</em> measures agreement across 140 continuous (0&ndash;100) score fields. <em>ICC(3,k)</em> is the intraclass correlation for 3 raters (consistency model) &mdash; values above 0.90 indicate excellent reliability. <em>Enum &alpha;</em> uses the nominal variant of Krippendorff&rsquo;s &alpha; for 9 categorical fields (e.g., governance_posture, binding_nature). <em>Tag Jaccard</em> measures set-overlap agreement for 8 multi-label fields (e.g., rhetoric, sector_scope). <em>Flagged</em> counts fields below the &alpha;&nbsp;=&nbsp;0.67 threshold.
+            </div>
+            <div class="chart-card">
+                <h3>Krippendorff's &alpha; Distribution (Score Fields)</h3>
+                <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">Each dot represents one of 140 score fields, positioned by channel (x-axis) and &alpha; value (y-axis). Points are jittered horizontally to reduce overlap. The <span style="color:#ef4444;">red dashed line</span> marks the acceptability threshold (&alpha;&nbsp;=&nbsp;0.67); the <span style="color:#f59e0b;">yellow dotted line</span> marks &ldquo;good&rdquo; (&alpha;&nbsp;=&nbsp;0.80). Nearly all fields cluster above 0.90, indicating excellent agreement. <span style="color:#E69F00;">Orange = C1 Content</span>, <span style="color:#56B4E9;">Blue = C2 Form</span>, <span style="color:#009E73;">Green = Crosswalk</span>.</p>
+                <div class="chart-container" id="chart-rfg-alpha-strip" style="height:500px;"></div>
+            </div>
+            <div class="chart-grid-2">
+                <div class="chart-card">
+                    <h3>Channel-Level &alpha; Comparison</h3>
+                    <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">Mean and median &alpha; for each channel. C2 Form fields (0.950) are slightly more reliable than C1 Content fields (0.943), likely because form features (binding nature, geographic scope) are less ambiguous than content features (epistemic humility, value tensions). The crosswalk channel has only 1 scored field.</p>
+                    <div class="chart-container" id="chart-rfg-channel-alpha"></div>
+                </div>
+                <div class="chart-card">
+                    <h3>Enum (&alpha;) &amp; Tag-List (Jaccard) Reliability</h3>
+                    <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;"><span style="color:#6366f1;">Purple bars</span> show nominal &alpha; for each enum field (e.g., governance_posture achieves 0.966 across 13 categories). <span style="color:#22c55e;">Green bars</span> show mean Jaccard similarity for tag-list fields (e.g., sector_scope achieves 0.917). Higher values mean the 3 coders selected the same categories/tags despite different prompt phrasings.</p>
+                    <div class="chart-container" id="chart-rfg-enum-tag"></div>
+                </div>
+            </div>
+            <div class="chart-card">
+                <h3>Flagged Fields (Below Threshold)</h3>
+                <p style="font-size:0.82rem;opacity:0.7;margin:0 0 0.5rem 0;">Fields with &alpha;&nbsp;&lt;&nbsp;0.67 require attention. These are typically culturally specific concepts with sparse activation (most statements score 0) where small differences in the few non-zero scores disproportionately affect &alpha;.</p>
+                <div id="rfg-flagged-table" style="padding:1rem;"></div>
+            </div>
+            <div class="narrative-box" style="margin-top:1rem;padding:1rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);">
+                <strong>Bottom line:</strong> The Governance Genome coding scheme is <strong>highly reliable across prompt variants</strong>. Mean &alpha;&nbsp;=&nbsp;0.942 far exceeds the 0.67 acceptability threshold and the 0.80 &ldquo;good&rdquo; threshold. 136 of 140 score fields achieve &alpha;&nbsp;&ge;&nbsp;0.80. All 9 enum fields exceed 0.91. The only flagged field &mdash; <code>gn_rahmah</code> (Islamic mercy/compassion, &alpha;&nbsp;=&nbsp;0.622) &mdash; is a culturally specific concept that activates on fewer than 5% of statements, making it statistically difficult to achieve high &alpha;. This does not compromise the main analysis, as the 6 policy families are driven by high-reliability C2 form features.
+            </div>
+            <div class="narrative-box" style="margin-top:0.8rem;padding:1rem;border-radius:8px;background:var(--card-bg);border:1px solid var(--border);font-size:0.88rem;">
+                <strong>Why high &alpha; for indigenous/religious fields?</strong> Fields like <code>gn_kedusha</code> (&alpha;&nbsp;=&nbsp;0.993), <code>gn_tribal_sovereignty</code> (0.993), and <code>gn_indigenous_data_sovereignty</code> (0.992) achieve near-perfect agreement because they are effectively binary: either a document discusses indigenous data governance or it doesn't. The coders agree perfectly on the 0-vs-nonzero distinction. The hardest fields are those requiring subjective degree judgment &mdash; <code>gn_value_tensions</code> (0.897), <code>gn_collective_individual</code> (0.884), <code>gn_epistemic_humility</code> (0.882) &mdash; but even these exceed the &ldquo;good&rdquo; threshold.
+            </div>
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<!-- ==================== Footer ==================== -->
+<footer class="footer">
+    Genome Explorer v3-genomev2 &mdash; Response to Peer Review (v2) &mdash; Tapestry (Lin, 2026)
+</footer>
+
+<!-- External Scripts -->
+<script src="data.js"></script>
+<script src="findings_literature.js"></script>
+<script src="charts.js"></script>
+<script src="data_heatmap.js"></script>
+<script src="charts_heatmap.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
